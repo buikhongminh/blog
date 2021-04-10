@@ -1,6 +1,7 @@
 package org.sam.blog.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@JsonFormat
+@Data
 public class User {
 
     @Id

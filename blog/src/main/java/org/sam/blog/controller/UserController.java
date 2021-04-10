@@ -1,35 +1,36 @@
 package org.sam.blog.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import org.sam.blog.model.User;
 import org.sam.blog.service.UserService;
+import org.sam.blog.utils.HttpMessageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping(value = "/user")
-    public @ResponseBody List<User> findAll(){
-        List<User> users = userService.findAll();
-        return users;
+    public HttpMessageStatus findAll(){
+        HttpMessageStatus httpMessageStatus = new HttpMessageStatus(HttpStatus.OK.value(), HttpStatus.OK,null, userService.findAll());
+        return httpMessageStatus;
     }
 
     @PostMapping(value = "/user")
-    public @ResponseBody User createUser (){
-        User user1 = new User("buiviet","1234","bui@gmail.com");
-        return userService.save(user1);
+    public  HttpMessageStatus createUser (@RequestBody User user ){
+        HttpMessageStatus httpMessageStatus = new HttpMessageStatus(HttpStatus.OK.value(), HttpStatus.OK,null,userService.save(user));
+        return httpMessageStatus;
     }
 
     @GetMapping(value = "/user/{id}")
-   public Optional<User> findUserById( ){
-        return userService.findById(1);
+   public Optional<User> findUserById( @PathVariable Integer id  ){
+        return userService.findById(id);
     }
 
 }
